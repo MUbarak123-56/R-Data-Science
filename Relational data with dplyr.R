@@ -27,6 +27,10 @@ flights %>%
 ## Exercise
 flights <- mutate(flights, row_number())
 Lahman::Batting
+library(Lahman)
+Batting %>%
+  count(playerID, yearID, stint) %>%
+  filter(n > 1)
 # playerID, year ID and stint is the primary key
 # install.packages('babynames')
 babynames::babynames
@@ -137,11 +141,18 @@ flights %>%
   left_join(airport_loc, by = c("dest" = "faa"))
 
 ## MERGING
-
+x <- tribble(~key, ~val_x,     
+             1, "x1",     
+             2, "x2",     
+             3, "x3" )
+y <- tribble(~key, ~val_y,     
+             1, "y1",     
+             2, "y2",     
+             4, "y3" ) 
 merge(x,y, by = "key") # inner join
-merge(x, y, all.x = TRUE) # left join
-merge(x,y, al.y = TRUE) # right join
-merge(x,y, all.x = TRUE, all.y = TRUE) # full join
+merge(x, y, by = "key", all.x = TRUE) # left join
+merge(x,y, by = "key", all.y = TRUE) # right join
+merge(x,y,by = "key", all.x = TRUE, all.y = TRUE) # full join
 
 ## FILTERING JOINS
 top_dest <- flights %>%  
@@ -151,11 +162,11 @@ top_dest
 flights %>%  
   filter(dest %in% top_dest$dest) 
 flights %>%  
-  semi_join(top_dest, by = "dest") ## keeps rows that have a match on LHS
+  semi_join(top_dest, by = "dest") ## keeps rows that have a match while outputing only the LHS dataframe
 flights %>%  
-  anti_join(planes, by = "tailnum") %>%  # keeps rows that don't have a match
+  anti_join(planes, by = "tailnum") %>%  # keeps rows that don't have a match while outputing only the LHS dataframe
   count(tailnum, sort = TRUE) 
-
+anti_join(flights, planes, by = "tailnum")
 ## SET OPERATIONS
 df1 <- tribble(~x, ~y,  
                1,  1,   
@@ -165,5 +176,5 @@ df2 <- tribble(~x, ~y,
                1,  2)
 intersect(df1,df2) # retuns common obsevations
 union(df1,df2) # returns all observations
-setdiff(df1,df2) # returns observations in LHS
+setdiff(df1,df2) # returns different observations only in LHS
 setdiff(df2,df1)
