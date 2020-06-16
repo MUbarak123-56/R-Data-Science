@@ -168,13 +168,11 @@ flights %>%
   count(tailnum, sort = TRUE) 
 anti_join(flights, planes, by = "tailnum")
 ## SET OPERATIONS
-df1 <- tribble(~x, ~y,  
-               1,  1,   
-               2,  1) 
-df2 <- tribble(~x, ~y,   
-               1,  1,   
-               1,  2)
-intersect(df1,df2) # retuns common obsevations
-union(df1,df2) # returns all observations
-setdiff(df1,df2) # returns different observations only in LHS
-setdiff(df2,df1)
+?setdiff
+(x <- c(sort(sample(1:20, 9)), NA))
+(y <- c(sort(sample(3:23, 7)), NA))
+union(x, y)
+intersect(x, y)
+setdiff(x, y)
+setdiff(y, x)
+setequal(x, y)
