@@ -106,6 +106,7 @@ tibble(x = "e") %>%
   add_predictions(mod2)
 
 ## INTERACTIONS (CONTINUOUS AND CATEGORICAL)
+rm(sim3)
 ggplot(sim3, aes(x1, y)) + geom_point(aes(color = x2))
 mod1 <- lm(y ~ x1 + x2, data = sim3)
 mod2 <- lm(y ~ x1*x2, data = sim3)
